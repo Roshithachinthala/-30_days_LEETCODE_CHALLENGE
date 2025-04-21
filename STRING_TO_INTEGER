@@ -1,0 +1,38 @@
+class Solution {
+    public int myAtoi(String s) {
+        s = s.trim(); // Step 1: Remove leading whitespaces
+        if (s.length() == 0) return 0;
+
+        int sign = 1;
+        int index = 0;
+        int result = 0;
+        int INT_MAX = Integer.MAX_VALUE;
+        int INT_MIN = Integer.MIN_VALUE;
+
+        // Step 2: Check for optional sign
+        if (s.charAt(index) == '+') {
+            index++;
+        } else if (s.charAt(index) == '-') {
+            sign = -1;
+            index++;
+        }
+
+        // Step 3: Convert digits to number
+        while (index < s.length()) {
+            char ch = s.charAt(index);
+            if (!Character.isDigit(ch)) break;
+
+            int digit = ch - '0';
+
+            // Step 4: Handle overflow
+            if (result > (INT_MAX - digit) / 10) {
+                return sign == 1 ? INT_MAX : INT_MIN;
+            }
+
+            result = result * 10 + digit;
+            index++;
+        }
+
+        return result * sign;
+    }
+}
